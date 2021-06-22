@@ -1,0 +1,389 @@
+
+{% load static %}
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单木数据管理系统</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/back.css' %}">
+
+	<link rel="shortcut icon"  href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    <script type="text/javascript" src="http://mat1.gtimg.com/libs/jquery/1.12.0/jquery.min.js" ></script>
+
+
+	<script type="text/javascript">
+	    function checktree(id,isEntered){	
+	    	var index = id;
+	    	var index2 = isEntered;
+		    $.ajax({
+			    url: '{% url "backtree:check" %}',
+			    type: 'GET',
+			    async: true,
+			    data: {
+			    	'num':index,
+			    	'isEntered':index2,
+			    },
+			    success:function(result){
+			    	alert("完成审核！");
+			    },		    
+			    error:function(){
+			    	alert("审核失败！");
+			    }			    
+		    });
+	    }
+    </script>
+
+
+	<style type="text/css">
+        /*table {border-collapse: collapse;}*/
+        #wanttree{
+        	border-collapse: collapse;
+        }
+
+
+        #busi{            
+            overflow-y: scroll;
+        }
+
+        #busi::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #busi::-webkit-scrollbar
+        {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        #busi::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear,
+                                       40% 0%,
+                                       75% 84%,
+                                       from(#4D9C41),
+                                       to(#19911D),
+                                       color-stop(.6,#54DE5D))
+        }
+
+        .button1{
+	       background:linear-gradient(rgb(242 252 230),rgb(210 231 183));
+           color: rgb(67 134 12);	
+	       border-radius: 4px;
+	       border:solid rgb(201 221 173)1px;
+	       border-width: 0.1px;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+           font-size: 8px;  
+           cursor: pointer;
+           float: right;
+           
+        } 
+
+
+        #entity_table{            
+            overflow-y: scroll;
+            height: 262px;
+        }
+
+        #entity_table::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #entity_table::-webkit-scrollbar
+        {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        #entity_table::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear,
+                                       40% 0%,
+                                       75% 84%,
+                                       from(#4D9C41),
+                                       to(#19911D),
+                                       color-stop(.6,#54DE5D))
+        }
+
+        #user_table{            
+            overflow-y: scroll;
+            height: 262px;
+        }
+
+        #user_table::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #user_table::-webkit-scrollbar
+        {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        #user_table::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear,
+                                       40% 0%,
+                                       75% 84%,
+                                       from(#4D9C41),
+                                       to(#19911D),
+                                       color-stop(.6,#54DE5D))
+        }
+      
+        
+
+    </style>
+
+</head>
+
+<body>
+  <div class="center">
+	<div class="header">
+		<div class="inheader">
+			<div class="first">
+				<img src="{% static 'images/user.png' %}" style="padding-top:25px;padding-left:5px;position:relative;">
+
+			</div>
+			<div class="second">
+				<p style="position:relative;float:left;text-align:center;">欢迎您-<br> Admin</p>
+
+				<img src="{% static 'images/clock.png' %}" style="width:48px;height:48px;float:right;position:relative;margin-top:4px"  >
+			</div>
+			<div class="third">
+				<div class="cms">
+	        		<h1>单木数据管理系统</h1>
+	        		<h2>TREE DATA MANAGEMENT</h2>
+	        	</div>
+
+			</div>
+			<div class="fourth">
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'maptree:lists' %}'" >⌂ 首页</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:structure' %}'" >↺ 库结构维护</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">▶ 批创建</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:codes' %}'" >◀ 代码管理</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:check' %}'" >▤ 用户数据审核</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='/login'" >ⓛ 退出</button>
+			</div>
+			<div class="fifth" id="date">
+				    <script type="text/javascript">
+                        setInterval(function(){
+                        var date = new Date();
+                        var year = date.getFullYear();    //获取当前年份
+                        var mon = date.getMonth()+1;      //获取当前月份
+                        var da = date.getDate();          //获取当前日
+                        var day = date.getDay();          //获取当前星期几
+                        var h = date.getHours();          //获取小时
+                        var m = date.getMinutes();        //获取分钟
+                        var s = date.getSeconds();        //获取秒
+                        var d = document.getElementById('date');
+          d.innerHTML=year+'年'+mon+'月'+da+'日'+'星期'+day+' '+h+':'+m+':'+s;
+        },1000)
+            </script>
+			</div>
+		</div>
+	</div>
+	<div class="middle">
+		<div class="guide">
+			<div class="manage">
+				<img src="{% static 'images\cacula.png' %}" style="margin-left:5px;margin-right:3px;margin-top:5px;position:position:relative;float:left;">
+				<div class="maop">
+					<p>管理选项</p>
+				</div>
+				<div class="down">
+					<img src="{% static 'images\time.png' %}" style="float:right;margin-top:5px;margin-right:2px;">
+				</div>
+			</div>
+			<div class="option">
+				<div class="op">
+					<img src="{% static 'images\xitong.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+				</div>
+                 <div class="op">
+					 <img src="{% static 'images\rizhi.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                 <div class="op">
+					 <img src="{% static 'images\shuju.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                <a href="/back/lists{{pindex}}">后台系统数据</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'backtree:user' %}">后台用户数据</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'maptree:lists' %}">地图数据</a>
+                 <div id="findzone" >
+<!--  			        <form id="findback" method="post" >
+                    {% csrf_token %}
+                        <input type="integer" name="eid" placeholder="eid" style="width: 20px" >
+                        <input type="charset" name="species" placeholder="树种" style="width: 42px" >
+                        <input type="charset" name="places" placeholder="位置" style="width: 72px" >
+                        <input  class="button1" type="submit" value="查询"  name="find" style="width: 35px">
+
+                    </form> -->
+                </div>
+			</div>
+			<div class="busi"  id="busi">
+				<table class="ta" id="wanttree" border="1" background="{% static 'images\footer.jpg' %}" >
+						<col align="center">
+						</col>
+						<caption >待审用户数据</caption>
+						<thead>
+						<tr style="background:linear-gradient(rgb(255 255 255),rgb(217 237 192));">
+							<td>id</td>
+							<td>eid</td>
+							<td>树种</td>
+						</tr>
+						</thead>
+						<tbody>
+						{% for t in dischecked %}
+						<tr>	
+							<td width="25px">{{t.id}}</td>							
+							<td width="50px">{{t.entity_id}}</td>
+							<td width="100px">{{t.pname}}</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+				</table>              
+			</div>
+
+		</div>
+		<div class="work">
+			
+				<div class="tabl" id="entity_table">
+					<table class="ta"  border="1"  >
+						<col align="center">
+						</col>
+						<caption >系统数据</caption>
+						<thead>
+						<tr style="background:linear-gradient(rgb(255 255 255),rgb(217 237 192));">
+							<td>选择</td>
+							<td>序号</td>
+							<td>实体编号</td>
+							<td>树种编号</td>
+							<td>树种名</td>
+							<td>X坐标</td>
+							<td>Y坐标</td>
+							<td>邮编</td>
+							<td>单位</td>
+							<td>位置</td>
+							<td>频率</td>
+							<td>上传者</td>						
+							<td>审核者</td>
+							<td>审核时间</td>
+							<td>编辑</td>
+							<td>地图查看</td>
+						</tr>
+						</thead>
+						<tbody>
+						{% for d in list_entity %}
+						<tr>
+							<td><input type="checkbox" name=""></td>
+							<td>{{d.id}}</td>
+							<td>{{d.entity_id}}</td>
+							<td>{{d.pno}}</td>
+							<td>{{d.pname}}</td>
+							<td>{{d.p_x}}</td>
+							<td>{{d.p_y}}</td>
+							<td>{{d.region_id}}</td>
+							<td>{{d.plant_company}}</td>
+							<td>{{d.place}}</td>
+							<td>{{d.rate}}</td>
+							<td>{{d.recorder_id}}</td>
+							<td>{{d.checker_id}}</td>
+							<td>{{d.check_time}}</td>
+							<td><button class="button1" onclick="window.open('{% url 'maptree:insert' %}')">✎</button></td>
+							<td><button class="button1" onclick="window.location.href='{% url 'maptree:lists' %}'" >地图查看</button></td>
+						</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="tabl" id="user_table">
+					<table class="ta"  border="1"  >
+						<col align="center">
+						</col>
+						<caption >用户数据</caption>
+						<thead>
+						<tr style="background:linear-gradient(rgb(255 255 255),rgb(217 237 192));">
+							<td>选择</td>
+							<td>序号</td>
+							<td>实体编号</td>
+							<td>树种编号</td>
+							<td>树种名</td>
+							<td>X坐标</td>
+							<td>Y坐标</td>
+							<td>邮编</td>
+							<td>单位</td>
+							<td>位置</td>
+							<td>频率</td>
+							<td>上传者</td>						
+							<td>审核状态</td>
+							<td>上传时间</td>
+							<td>审核?</td>
+							<td>通过?</td>
+						</tr>
+						</thead>
+						<tbody>
+						{% for d in list_user %}
+						<tr>
+							<td><input type="checkbox" name=""></td>
+							<td>{{d.id}}</td>
+							<td>{{d.entity_id}}</td>
+							<td>{{d.pno}}</td>
+							<td>{{d.pname}}</td>
+							<td>{{d.p_x}}</td>
+							<td>{{d.p_y}}</td>
+							<td>{{d.region_id}}</td>
+							<td>{{d.plant_company}}</td>
+							<td>{{d.place}}</td>
+							<td>{{d.rate}}</td>
+							<td>{{d.recorder_id}}</td>
+							<td>{{d.checked}}</td>
+							<td>{{d.create_date}}</td>
+							{% csrf_token %}
+							{% if d.checked == 0 %}
+							<td><button class="button1" name="{{ d.id }}" onclick="checktree(this.name,0)" >不通过</button></td>
+							<td><button class="button1" name="{{ d.id }}" onclick="checktree(this.name,1)" >通过</button></td>
+							{% elif d.checked == 1 %}
+							    <td>已审核</td>
+							    <td>未通过</td>
+							{% else %}
+							    <td>已审核</td>
+							    <td>已通过</td>
+							{% endif %}
+
+						</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					
+				</div>
+
+			
+		</div>
+	</div>
+
+
+	<div class="footer">
+		<div class="fo1">
+☐ 版本 2020V1.0
+		</div>
+		<div class="fo2">
+			？
+		</div>
+	</div>
+   </div>
+</body>
+</html>
+

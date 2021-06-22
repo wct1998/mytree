@@ -1,0 +1,321 @@
+
+{% load static %}
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单木数据管理系统</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/back.css' %}">
+
+	<link rel="shortcut icon"  href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+
+	<style type="text/css">
+        /*table {border-collapse: collapse;}*/
+        #wanttree{
+        	border-collapse: collapse;
+        }
+
+
+        #busi{            
+            overflow-y: scroll;
+        }
+
+        #busi::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #busi::-webkit-scrollbar
+        {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        #busi::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear,
+                                       40% 0%,
+                                       75% 84%,
+                                       from(#4D9C41),
+                                       to(#19911D),
+                                       color-stop(.6,#54DE5D))
+        }
+
+
+        #code_table{            
+            overflow-y: scroll;
+        }
+
+        #code_table::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #code_table::-webkit-scrollbar
+        {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        #code_table::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear,
+                                       40% 0%,
+                                       75% 84%,
+                                       from(#4D9C41),
+                                       to(#19911D),
+                                       color-stop(.6,#54DE5D))
+        }
+
+
+        .button1{
+	       background:linear-gradient(rgb(242 252 230),rgb(210 231 183));
+           color: rgb(67 134 12);	
+	       border-radius: 4px;
+	       border:solid rgb(201 221 173)1px;
+	       border-width: 0.1px;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+           font-size: 8px;  
+           cursor: pointer;
+           float: right;
+           
+        }
+
+        .button2{
+	       background:linear-gradient(rgb(242 252 230),rgb(210 231 183));
+           color: rgb(67 134 12);	
+	       border-radius: 4px;
+	       border:solid rgb(201 221 173)1px;
+	       border-width: 0.1px;
+           text-align: center;
+           text-decoration: none;
+           display: inline-block;
+           font-size: 10px; 
+           cursor: pointer;
+           float: left;           
+        }
+
+
+
+        .tabl2{
+	        width: 500px;
+	        height: 533px;
+	        text-align: center;
+	        background:linear-gradient(rgb(203 233 163),rgb(255 254 251));
+	        border-radius: 4px;
+	        border:solid rgb(201 221 173)1px;
+	        border-width: 1px;
+	        margin-left: 1px;
+	        margin-top: 1px;
+	        position: relative;
+	        float: left;
+        }
+        .tabl3{
+	        width: 312px;
+	        height: 533px;
+	        text-align: center;
+	        background:linear-gradient(rgb(203 233 163),rgb(255 254 251));
+	        border-radius: 4px;
+	        border:solid rgb(201 221 173)1px;
+	        border-width: 1px;
+	        margin-left: 1px;
+	        margin-top: 1px;
+	        position: relative;
+	        float: right;
+        }
+
+        .form-group{
+            width: 200px;
+        }
+       
+        
+
+    </style>
+
+</head>
+
+<body>
+  <div class="center">
+	<div class="header">
+		<div class="inheader">
+			<div class="first">
+				<img src="{% static 'images/user.png' %}" style="padding-top:25px;padding-left:5px;position:relative;">
+
+			</div>
+			<div class="second">
+				<p style="position:relative;float:left;text-align:center;">欢迎您-<br> Admin</p>
+
+				<img src="{% static 'images/clock.png' %}" style="width:48px;height:48px;float:right;position:relative;margin-top:4px"  >
+			</div>
+			<div class="third">
+				<div class="cms">
+	        		<h1>单木数据管理系统</h1>
+	        		<h2>TREE DATA MANAGEMENT</h2>
+	        	</div>
+
+			</div>
+			<div class="fourth">
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'maptree:lists' %}'" >⌂ 首页</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:structure' %}'"  >↺ 库结构维护</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">▶ 批创建</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:codes' %}'" >◀ 代码管理</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:check' %}'" >▤ 用户数据审核</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='/login'" >ⓛ 退出</button>
+			</div>
+			<div class="fifth" id="date">
+				    <script type="text/javascript">
+                        setInterval(function(){
+                        var date = new Date();
+                        var year = date.getFullYear();    //获取当前年份
+                        var mon = date.getMonth()+1;      //获取当前月份
+                        var da = date.getDate();          //获取当前日
+                        var day = date.getDay();          //获取当前星期几
+                        var h = date.getHours();          //获取小时
+                        var m = date.getMinutes();        //获取分钟
+                        var s = date.getSeconds();        //获取秒
+                        var d = document.getElementById('date');
+          d.innerHTML=year+'年'+mon+'月'+da+'日'+'星期'+day+' '+h+':'+m+':'+s;
+        },1000)
+            </script>
+			</div>
+		</div>
+	</div>
+	<div class="middle">
+		<div class="guide">
+			<div class="manage">
+				<img src="{% static 'images\cacula.png' %}" style="margin-left:5px;margin-right:3px;margin-top:5px;position:position:relative;float:left;">
+				<div class="maop">
+					<p>管理选项</p>
+				</div>
+				<div class="down">
+					<img src="{% static 'images\time.png' %}" style="float:right;margin-top:5px;margin-right:2px;">
+				</div>
+			</div>
+			<div class="option">
+				<div class="op">
+					<img src="{% static 'images\xitong.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+				</div>
+                 <div class="op">
+					 <img src="{% static 'images\rizhi.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                 <div class="op">
+					 <img src="{% static 'images\shuju.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                <a href="/back/lists{{pindex}}">后台系统数据</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'backtree:user' %}">后台用户数据</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'maptree:lists' %}">地图数据</a>
+                 <div id="findzone" >
+ 			        <form id="findback" method="get" >
+                    {% csrf_token %}
+                        <input type="integer" name="cno" placeholder="cno" style="width: 20px" >
+                        <input type="charset" name="cname" placeholder="属性" style="width: 42px" >
+                        <input type="charset" name="des" placeholder="具体描述" style="width: 72px" >
+                        <input  class="button1" type="submit" value="查询"  name="find" style="width: 35px">
+                    </form>
+                </div>
+			</div>
+			<div class="busi"  id="busi">
+				<table class="ta" id="wanttree" border="1" background="{% static 'images\footer.jpg' %}" >
+						<thead>
+						<tr style="background:linear-gradient(rgb(255 255 255),rgb(217 237 192));">
+							<td>代码号</td>
+							<td>属性</td>
+							<td>具体描述</td>
+						</tr>
+						</thead>
+						<tbody>
+						{% for t in result %}
+						<tr>	
+							<td width="30px">{{t.cno}}</td>							
+							<td width="50px">{{t.cname}}</td>
+							<td width="80px">{{t.des}}</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+				</table>              
+			</div>
+
+		</div>
+		<div class="work">			
+				<div class="tabl2" id="code_table" >
+					<table class="ta"  border="1"  >
+						<col align="center">
+						</col>
+						<caption >代码浏览</caption>
+						<thead>
+						<tr style="background:linear-gradient(rgb(255 255 255),rgb(217 237 192));">
+							<td>选择</td>
+							<td>表序号(cid)</td>
+							<td>代码号(cno)</td>
+							<td>代码表示的属性(cname)</td>
+							<td>具体描述</td>
+							<td>编辑</td>
+						</tr>
+						</thead>
+						<tbody>
+						{% for d in list %}
+						<tr>
+							<td><input type="checkbox" name=""></td>
+							<td>{{d.cid}}</td>
+							<td>{{d.cno}}</td>
+							<td>{{d.cname}}</td>
+							<td>{{d.des}}</td>
+							<td><button class="button1" onclick="alert('代码暂时不能删除！')" >删除</button></td>
+						</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="tabl3" id="insertcode">
+					<caption>增加/编辑代码</caption>
+					<br>
+					<br>
+					<form id='addForm' action="{% url 'backtree:codes' %}" method="post">
+                        {% csrf_token %}
+                            <br>
+                            <div  class="form-group"> 
+                            	<input type="integer" name="cid_post" placeholder="cid(1-{{len}})，不填默认增加"   />
+                            </div>
+                            <br>
+                            <div class="form-group">                                
+                                <input type="integer" name="cno_post" placeholder="请输入代码号（必填）"   required/>
+                            </div>
+                            <br>
+                            <div class="form-group">                                
+                                <input type="charset" name="cname_post" placeholder="代码表示的属性名（必填）" required/>
+                            </div>
+                            <br>
+
+                            <div class="form-group">                                
+                                <input type="text" name="des_post" placeholder="代码的具体描述（必填）" required/>
+                            </div>
+                            <br>
+
+                            <input class="button2" type="submit"  value="提交"  align="center">
+                    </form>
+				</div>
+			
+		</div>
+	</div>
+
+
+	<div class="footer">
+		<div class="fo1">
+☐ 版本 2020V1.0
+		</div>
+		<div class="fo2">
+			？
+		</div>
+	</div>
+   </div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单木数据管理系统</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/2.css' %}">
+</head>
+
+<body>
+  <div class="center">
+	<div class="header">
+		<div class="inheader">
+			<div class="first">
+				<img src="{% static 'images/user.png' %}" style="padding-top:25px;padding-left:5px;position:relative;">
+
+			</div>
+			<div class="second">
+				<p style="position:relative;float:left;text-align:center;">欢迎您-<br> Admin</p>
+<!--				 <img src="static/images/clock.png" style="width:48px;height:48px;float:right;position:relative;margin-top:4px"  >-->
+				<img src="{% static 'images/clock.png' %}" style="width:48px;height:48px;float:right;position:relative;margin-top:4px"  >
+			</div>
+			<div class="third">
+				<div class="cms">
+	        		<h1>单木数据管理系统</h1>
+
+	        		<h2>TREE MANAGEMENT</h2>
+	        	</div>
+
+			</div>
+			<div class="fourth">
+				<button class="button" style="margin-right:0px;margin-left:0px;">⌂ 首页</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">◀ 后退</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">▶ 前进</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">↺ 刷新</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">▤ 用户信息修改</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;">ⓛ 退出</button>
+			</div>
+			<div class="fifth" id="date">
+				    <script type="text/javascript">
+                        setInterval(function(){
+                        var date = new Date();
+                        var year = date.getFullYear();    //获取当前年份
+                        var mon = date.getMonth()+1;      //获取当前月份
+                        var da = date.getDate();          //获取当前日
+                        var day = date.getDay();          //获取当前星期几
+                        var h = date.getHours();          //获取小时
+                        var m = date.getMinutes();        //获取分钟
+                        var s = date.getSeconds();        //获取秒
+                        var d = document.getElementById('date');
+          d.innerHTML=year+'年'+mon+'月'+da+'日'+'星期'+day+' '+h+':'+m+':'+s;
+        },1000)
+            </script>
+			</div>
+		</div>
+	</div>
+	<div class="middle">
+		<div class="guide">
+			<div class="manage">
+<!--				<img src="static/images/cacula.png" style="margin-left:5px;margin-right:3px;margin-top:5px;position:position:relative;float:left;">-->
+				<img src="{% static 'images/cacula.png' %}" style="margin-left:5px;margin-right:3px;margin-top:5px;position:position:relative;float:left;">
+				<div class="maop">
+					<p>管理选项</p>
+				</div>
+				<div class="down">
+<!--					<img src="static/images\menu_down.png" style="float:right;margin-top:5px;margin-right:2px;">-->
+					<img src="{% static 'images\menu_down.png' %}" style="float:right;margin-top:5px;margin-right:2px;">
+				</div>
+			</div>
+			<div class="option">
+				<div class="op">
+<!--					<img src="static/images\xitong.png" style="margin-left:5px;margin-right:5px;margin-top:5px;">-->
+					<img src="{% static 'images\xitong.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+				</div>
+                 <div class="op">
+<!--                 	<img src="static/images\rizhi.png" style="margin-left:5px;margin-right:5px;margin-top:5px;">-->
+					 <img src="{% static 'images\rizhi.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                 <div class="op">
+<!--                 	<img src="static/images\shuju.png" style="margin-left:5px;margin-right:5px;margin-top:5px;">-->
+					 <img src="{% static 'images\shuju.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                 &nbsp;&nbsp;系统管理&nbsp;&nbsp;&nbsp;地图管理&nbsp;&nbsp;数据管理
+			</div>
+			<div class="busi">
+			    <br>
+
+			    &nbsp;单木数据管理
+			    <br>
+			    <br>
+
+
+				&nbsp;&nbsp;<a href="" style="text-decoration:none;color:black;" >查询</a>
+				<br>
+				&nbsp;&nbsp;<a href="" style="text-decoration:none;color:black;" >修改</a>
+				<br>
+				&nbsp;&nbsp;<a href="" style="text-decoration:none;color:black;" >增加</a>
+				<br>
+				&nbsp;&nbsp;<a href="" style="text-decoration:none;color:black;" >删除</a>
+				<br>
+
+
+			</div>
+
+		</div>
+		<div class="work">
+			<div class="server">
+				<div class="tabl">
+<!--					<table class="ta"  border="1"  >-->
+<!--						<col align="center">-->
+<!--						</col>-->
+<!--						<caption >单木数据管理</caption>-->
+<!--						<tr style="background:linear-gradient(rgb(255 255 255),rgb(217 237 192));">-->
+<!--							<td width="65" >选择</td>-->
+<!--							<td width="85" >实体编号</td>-->
+<!--							<td width="205" >植物编号</td>-->
+<!--							<td width="105" >X坐标</td>-->
+<!--							<td width="105" >Y坐标</td>-->
+<!--							<td width="125" >树种名称</td>-->
+<!--							<td width="65" >编辑</td>-->
+<!--							<td width="65" >删除</td>-->
+<!--						</tr>-->
+<!--					</table>-->
+					<div id="form">
+						<form id='addForm' action="{% url 'treemanage:insert' %}" method="post">
+		                    <div class="form-group">
+		                        <label for="name">实体编号：</label>
+		                        <input type="integer" name="entity_id" placeholder="请输入实体编号" required/>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="name">植物编号：</label>
+		                        <input type="integer" name="pid" placeholder="请输入植物编号" required/>
+		                    </div>
+		                    <div class="form-group">
+								<label for="name">X坐标：</label>
+		                        <input type="double" name="p_x" placeholder="请输入X坐标" required/>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="name">Y坐标：</label>
+		                        <input type="double" name="p_y" placeholder="请输入Y坐标" required/>
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="name">树种编号：</label>
+		                        <input type="integer" name="pno" placeholder="请输入树种编号" required/>
+		                    </div>
+		                    <input type="submit" value="提交"  align="right">
+		                 </form>
+                     </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="footer">
+		<div class="fo1">
+☐ 版本 2020V1.0
+		</div>
+		<div class="fo2">
+			？
+		</div>
+	</div>
+   </div>
+</body>
+</html>

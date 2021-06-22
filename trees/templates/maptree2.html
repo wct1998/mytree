@@ -1,0 +1,455 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>单木数据管理系统</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}">
+    <link rel="shortcut icon"  href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+	
+    <style type="text/css">
+        table {border-collapse: collapse;}
+        td {cursor: pointer;}
+        #busi{            
+            overflow-y: scroll;
+        }
+
+        #busi::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #busi::-webkit-scrollbar
+        {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        #busi::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear,
+                                       40% 0%,
+                                       75% 84%,
+                                       from(#4D9C41),
+                                       to(#19911D),
+                                       color-stop(.6,#54DE5D))
+        }
+
+        .button1{
+            background:linear-gradient(rgb(242 252 230),rgb(210 231 183));
+            color: rgb(67 134 12);  
+            border-radius: 4px;
+            border:solid rgb(201 221 173)1px;
+            border-width: 0.1px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;  
+            cursor: pointer;
+            float: right;
+        }
+        
+
+    </style>
+
+	<script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=cE6slBpMkD9gFCxnguxGeZUbsin4k8ol">
+	</script>
+
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=cE6slBpMkD9gFCxnguxGeZUbsin4k8ol"></script>
+</head>
+
+<body>
+  <div class="center">
+	<div class="header">
+		<div class="inheader">
+			<div class="first">
+				<img src="{% static 'images/user.png' %}" style="padding-top:25px;padding-left:5px;position:relative;">
+			</div>
+			<div class="second">
+				<p style="position:relative;float:left;text-align:center;">欢迎您-<br> Admin</p>
+				<img src="{% static 'images/clock.png' %}" style="width:48px;height:48px;float:right;position:relative;margin-top:4px"  >
+			</div>
+			<div class="third">
+				<div class="cms">
+	        		<h1>单木数据管理系统</h1>
+	        		<h2>TREE DATA MANAGEMENT</h2>
+	        	</div>
+			</div>
+			<div class="fourth">
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="get_tree();">⌂ 显示</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="remove_tree();">◀ 移除</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'maptree:insert' %}'">▶ 增加</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="search_tree();">显示查询结果</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='{% url 'backtree:structure' %}'">▤ 库结构维护</button>
+				<button class="button" style="margin-right:0px;margin-left:0px;" onclick="window.location.href='/login'" >ⓛ 退出</button>
+			</div>
+			<div class="fifth" id="date">
+				    <script type="text/javascript">
+                        setInterval(function(){
+                        var date = new Date();
+                        var year = date.getFullYear();    //获取当前年份
+                        var mon = date.getMonth()+1;      //获取当前月份
+                        var da = date.getDate();          //获取当前日
+                        var day = date.getDay();          //获取当前星期几
+                        var h = date.getHours();          //获取小时
+                        var m = date.getMinutes();        //获取分钟
+                        var s = date.getSeconds();        //获取秒
+                        var d = document.getElementById('date');
+                        d.innerHTML=year+'年'+mon+'月'+da+'日'+'星期'+day+' '+h+':'+m+':'+s;
+                        },1000)
+                    </script>
+			</div>
+		</div>
+	</div>
+	<div class="middle">
+		<div class="guide">
+			<div class="manage">
+				<img src="{% static 'images\cacula.png' %}" style="margin-left:5px;margin-right:3px;margin-top:5px;position:position:relative;float:left;">
+				<div class="maop">
+					<p>管理选项</p>
+				</div>
+				<div class="down">
+					<img src="{% static 'images\time.png' %}" style="float:right;margin-top:5px;margin-right:2px;">
+				</div>
+			</div>
+			<div class="option">
+				<div class="op">
+					<img src="{% static 'images\xitong.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+				</div>
+                 <div class="op">
+					 <img src="{% static 'images\rizhi.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                 <div class="op">
+					 <img src="{% static 'images\shuju.png' %}" style="margin-left:5px;margin-right:5px;margin-top:5px;">
+                 </div>
+                 <a href="/back/lists{{pindex}}">后台系统数据</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'backtree:user' %}"> 后台用户数据</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'maptree:lists' %}">地图数据</a>
+                 <div id="searchzone"  >
+                    <form id="findtree" method="post" onsubmit="search_tree()">
+                        {% csrf_token %}
+                        <input type="integer" name="eids" placeholder="eid" style="width: 16px" >
+                        <input type="charset" name="species" placeholder="树种" style="width: 42px" >
+                        <input type="charset" name="places" placeholder="位置" style="width: 65px" >
+                        <input  class="button1" type="submit" value="查询"  name="find" style="width: 35px">
+                    </form>
+                 </div>
+
+
+			</div>
+			<div class="busi" id="busi">
+                
+                    <table id="systemdata" border="1" background="{% static 'images\footer.jpg' %}">                        
+                        <thead>
+                        <tr style="font-size: xx-small;font-weight: bold;">
+                            <td>eid</td>
+                            <td>树种</td>
+                            <td>位置</td>
+                        </tr>
+                        </thead>
+                        <tbody id="tb">
+                            <script type="text/javascript">
+                                var eids = {{ tree_entity_id |safe }};
+                                var places = {{ tree_place |safe }};
+                                var names = {{ tree_pname |safe }};
+                                var xs = {{ tree_x |safe }};
+                                var ys = {{ tree_y |safe }};
+                                cols = 3;
+                                var rows = eids.length;
+                                var str = "";
+                                for (var i = 0; i < rows; i++) {
+                                    str += '<tr style="font-size: xx-small;">';
+                                        str += `<td onclick='show(${i})'>${eids[i]}</td>`;
+                                        str += `<td onclick='show(${i})'>${names[i]}</td>`;
+                                        str += `<td onclick='show(${i})'>${places[i]}</td>`;
+                                    str += '</tr>';
+                                }
+                                document.write(str);  
+
+                                function show(ii){
+                                    var po = new BMapGL.Point(xs[ii], ys[ii]);
+
+                                    var opts = {
+                                        width : 250,
+                                        height : 250,
+                                        title : "树木信息"+ '\n' +  "<a href='{% url 'maptree:insert' %}' style='text-decoration:none;color:red;' target='_blank' >编辑</a>",
+                                    }
+                                    var imagelabel = "<img src=";
+                                    var imageurl = "'{% static 'images/4.jpg' %}'";
+                                    var imagestyle = " style='width:100px;height:100px'>";
+                                    var imagestring = imagelabel + imageurl + imagestyle;
+
+                                    var scontent1 = "<table id='infw' border='1'>"+
+                                        "<tr>"+"<td>实体编号</td>"+`<td>${eids[ii]}</td>`+"</tr>"+
+                                        "<tr>"+"<td>树种名</td>"+`<td>${names[ii]}</td>`+"</tr>"+
+                                        "<tr>"+"<td>GPS坐标x</td>"+`<td>${xs[ii]}</td>`+"</tr>"+
+                                        "<tr>"+"<td>GPS坐标y</td>"+`<td>${ys[ii]}</td>`+"</tr>"+
+                                        "<tr>"+"<td>分布位置</td>"+`<td>${places[ii]}</td>`+"</tr>"+
+                                        "<tr>"+"<td>实体图片</td>"+`<td>${imagestring}</td>`+"</tr>"+
+                                        "</table>";
+                                    var info = new BMapGL.InfoWindow(scontent1,opts);
+
+                                    map.openInfoWindow(info,po);
+                                    map.panTo(po);
+                                    console.log(ii);                            
+
+                                }
+
+
+
+
+
+
+
+
+
+
+                            </script>
+                            
+                        </tbody>
+                    </table>              
+
+
+
+                </div>
+
+			
+
+		</div>
+		<div id="work">
+			
+
+		</div>
+	</div>
+    
+	<div class="footer">
+		<div class="fo1">
+            ☐ 版本 2020V1.0
+		</div>
+		<div class="fo2">
+			？
+		</div>
+	</div>
+   </div>
+</body>
+</html>
+
+<script type="text/javascript">
+	//创建和初始化地图函数：
+	function initMap(){
+		createMap();//创建地图
+        setMapEvent();//设置地图事件
+        addMapControl();//向地图添加控件
+        // tests();
+
+	}
+    
+	//创建地图函数：
+	function createMap(){
+		var map = new BMapGL.Map("work");          // 创建地图实例 
+        var point = new BMapGL.Point(116.351446, 40.007888);  // 创建点坐标 
+        map.centerAndZoom(point, 20);                 
+        window.map = map;//将map变量存储在全局
+
+	}
+
+    //地图事件设置函数：
+    function setMapEvent(){
+    	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        map.setHeading(0);   //设置地图旋转角度
+        map.setTilt(0);       //设置地图的倾斜角度
+
+    }
+
+    //地图控件添加函数：
+    function addMapControl(){
+    	//向地图中添加比例尺控件
+    	var ctrl_sca = new BMapGL.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+        map.addControl(ctrl_sca);
+    }
+    initMap();//创建和初始化地图
+    
+
+    // function tests(){
+    // 	var myIcon = new BMapGL.Icon("http://map.baidu.com/image/us_mk_icon.png", new BMapGL.Size(26,26));
+    // 	var poin = new BMapGL.Point(116.35131893563208, 40.01010863841203);            
+    //     var marke = new BMapGL.Marker(poin, {icon:myIcon});
+    //     map.addOverlay(marke);
+    // }
+
+    //创建marker
+
+
+    // function list_tree(){
+    // 	var myIcon = new BMapGL.Icon("http://map.baidu.com/image/us_mk_icon.png", new BMapGL.Size(26,26));
+    // 	{% for d in list %}   
+
+    // 	var x = {{d.p_x}};
+    //     var y = {{d.p_y}};
+    //     var eid = {{d.entity_id}};
+    //     var rate = {{d.prate}};
+    //     var place = {{d.pplace}};
+    //     var name = {{d.pname}};
+
+    //     var point;
+    //     var marker;
+    //     point = new BMapGL.Point(x, y); 
+    //     marker = new BMapGL.Marker(point, {icon:myIcon});
+    //     map.addOverlay(marker);
+
+
+    //     var infoWindow = new BMapGL.InfoWindow(rate+'\n'+place+'\n'+name, opts);
+    //     marker.addEventListener("click", function(){
+    //     	map.openInfoWindow(infoWindow, point);
+    //     });
+
+    // 	{% endfor %}
+
+    // }
+
+
+    function get_tree(){
+
+    	// var myIcon = new BMapGL.Icon("http://map.baidu.com/image/us_mk_icon.png", new BMapGL.Size(26,26));
+
+        var myIcon = new BMapGL.Icon("{% static 'images/trees.png' %}", new BMapGL.Size(13,23));
+
+    	var x = {{ tree_x |safe }};
+        var y = {{ tree_y |safe }};
+        var eid = {{ tree_entity_id |safe }};
+        var rate = {{ tree_rate |safe }};
+        var place = {{ tree_place |safe }};
+        var  name = {{ tree_pname |safe }};
+
+
+        var point = []; //存放点信息
+        var marker = []; //存放标记点对象数组
+
+
+
+        for (var i = 0; i < eid.length; i++){
+            point[i] = new BMapGL.Point(x[i], y[i]);
+        }        
+            
+    
+   
+        
+        for ( var i = 0; i < point.length; i++) {
+        	marker[i] = new BMapGL.Marker(point[i], {icon:myIcon});
+            map.addOverlay(marker[i]);        	
+        };
+
+
+        for (i=0; i < marker.length;i++){
+            (function () {
+                var index = i;
+                var opts = {
+                    width : 250,
+                    height : 250,
+                    title : "树木信息"+ '\n' +  "<a href='{% url 'maptree:insert' %}' style='text-decoration:none;color:red;' target='_blank' >编辑</a>",
+                }
+
+                var imagelabel = "<img src=";
+                var imageurl = "'{% static 'images/4.jpg' %}'";
+                var imagestyle = " style='width:100px;height:100px'>";
+                var imagestring = imagelabel + imageurl + imagestyle;
+
+
+                var scontent1 = "<table id='infw' border='1'>"+
+                "<tr>"+"<td>实体编号</td>"+`<td>${eid[index]}</td>`+"</tr>"+
+                "<tr>"+"<td>树种名</td>"+`<td>${name[index]}</td>`+"</tr>"+
+                "<tr>"+"<td>GPS坐标x</td>"+`<td>${x[index]}</td>`+"</tr>"+
+                "<tr>"+"<td>GPS坐标y</td>"+`<td>${y[index]}</td>`+"</tr>"+
+                "<tr>"+"<td>分布位置</td>"+`<td>${place[index]}</td>`+"</tr>"+
+                "<tr>"+"<td>实体图片</td>"+`<td>${imagestring}</td>`+"</tr>"+
+                "</table>";
+
+                var infowin = new BMapGL.InfoWindow(scontent1,opts);
+
+                marker[index].addEventListener('click', function () {
+                   this.openInfoWindow(infowin);
+                });
+           })();
+        }
+
+        window.point = point;
+        window.marker = marker;
+        
+      }
+
+
+    //删除标注
+    function remove_tree(){
+		map.clearOverlays();      
+	}
+    
+
+    //删除单木 
+    function delete_tree(){
+
+    }
+    
+    //增加单木
+    function insert_tree(){
+
+    }
+
+    //查询单木
+    function search_tree(){
+        initMap();//创建和初始化地图
+        var tree = {{ result|safe }};
+        var points = []; //存放点信息
+        var markers = []; //存放标记点对象数组   
+        
+        var myIcon1 = new BMapGL.Icon("{% static 'images/tree_search.png' %}", new BMapGL.Size(32,32));
+
+        for (var i = 0; i < tree.length; i++){
+            points[i] = new BMapGL.Point(tree[i].p_x, tree[i].p_y);
+        }
+
+        for (var i = 0; i < points.length; i++) {
+            markers[i] = new BMapGL.Marker(points[i], {icon:myIcon1});
+            map.addOverlay(markers[i]);          
+        };
+
+        for (var i=0; i < markers.length;i++){
+            (function () {
+                var index = i;
+                var opts = {
+                    width : 250,
+                    height : 250,
+                    title : "查询结果"+ '\n' +  "<a href='{% url 'maptree:insert' %}' style='text-decoration:none;color:red;' target='_blank'>编辑</a>",
+                }
+
+                var imagelabel = "<img src=";
+                var imageurl = "'{% static 'images/4.jpg' %}'";
+                var imagestyle = " style='width:100px;height:100px'>";
+                var imagestring = imagelabel + imageurl + imagestyle;
+
+
+
+                // var scontent2 = "NMSL";
+
+                var scontent1 = "<table id='infws' border='1'>"+
+                "<tr>"+"<td>实体编号</td>"+`<td>${tree[index].entity_id}</td>`+"</tr>"+
+                "<tr>"+"<td>树种名</td>"+`<td>${tree[index].pname}</td>`+"</tr>"+
+                "<tr>"+"<td>GPS坐标x</td>"+`<td>${tree[index].p_x}</td>`+"</tr>"+
+                "<tr>"+"<td>GPS坐标y</td>"+`<td>${tree[index].p_y}</td>`+"</tr>"+
+                "<tr>"+"<td>分布位置</td>"+`<td>${tree[index].place}</td>`+"</tr>"+
+                "<tr>"+"<td>实体图片</td>"+`<td>${imagestring}</td>`+"</tr>"+
+                "</table>";
+
+                var infowins = new BMapGL.InfoWindow(scontent1,opts);
+
+                markers[index].addEventListener('click', function () {
+                   this.openInfoWindow(infowins);
+                });
+           })();
+        }
+
+    }   
+ </script>

@@ -1,0 +1,172 @@
+/*
+{% load staticfiles %}*/
+
+.center{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 1000px;
+	height: 614px;
+	margin-top: -307px;
+    margin-left: -500px;
+}
+.login{
+	width: 500px;
+	height: 240px;
+	position: absolute;
+    border:0.3px solid;
+    border-radius: 5px;
+	background-image: url(../images/header.JPG);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);    /* 50%为自身尺寸的一半 */
+    -webkit-transform: translate(-50%, -50%);    /* 50%为自身尺寸的一半 */
+    -moz-transform: translate(-50%, -50%);    /* 50%为自身尺寸的一半 */
+
+ }
+.header{
+	width: 500px;
+	height: 60px;
+	background-color: green;
+	background-image: url(../images/header.JPG);
+	border:0.3px solid;
+	border-radius: 5px 5px 0px 0px;
+	margin-bottom: 2px;
+}
+
+.inheader{
+	border:0.3px solid;
+	border-radius: 5px;
+    width: 488px;
+    height: 53px;
+	background-color: green;
+	background-image: url(../images/inheader.JPG);
+	position: relative;
+	margin-right: 6px;
+	margin-left: 6px;
+	margin-top: 6px;
+	margin-bottom: 0px;
+}
+
+.inheadimg{
+	position:relative;
+	padding-left: 15px;
+	float: left;
+}
+
+.headtext1{
+	margin-left: 10px;
+	margin-top: 12px;
+	width: 200px;
+	height: 40px;
+	float: left;
+	position: relative;
+}
+.cms{
+	width: 180px;
+	height: 22px;
+	background-image: url(../images/cms.JPG);
+	border:0.2px solid;
+	border-radius: 8px;
+	position: absolute;
+}
+
+
+
+h1{
+	color: white;
+	position: relative;
+	text-align: center;
+	line-height: 0px;
+	font-size: 20px;
+	font-family: "楷体";
+	font-weight: normal;
+}
+
+h2{
+	color: gray;
+	position: relative;
+	text-align: center;
+	line-height: 15px;
+	font-size: xx-small;
+	font-family: Georgia;
+	font-weight: normal;
+}
+
+.headtext2{
+	width: 120px;
+	height: 22px;
+	position: relative;
+	float: right;
+	padding-right: 12px;
+}
+
+h3{
+	color: green;
+	position: absolute;
+	text-align: right;
+	line-height: 55px;
+	font-size: 15px;
+	font-family: "楷体";
+	font-weight: normal;
+}
+
+.main{
+	width: 500px;
+	height: 148px;
+	background-color: green;
+	background-image: url(../images/main_back.jpg);
+	
+}
+.lmain{
+	width: 225px;
+	height: 148px;
+	background-image: url(../images/lmain_back.jpg);
+	background-color: green;
+	float: left;
+	position: relative;
+}
+.imag{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+.rmain{
+	width: 225px;
+	height: 148px;
+	background-color: green;
+	background-image: url(../images/rmain_back.JPG);
+	float: left;
+    font-size: 10px;
+	color: green;
+    font-family: "宋体";  
+    text-align: left;
+}
+
+input[type="text"]
+{
+  width:120px;  
+}
+
+
+
+.footer{
+	width: 500px;
+	height: 30px;	
+	background-image: url(../images/footer.JPG);
+    border:0.3px solid;
+    border-color: green;
+	border-radius: 0px 0px 5px 5px;
+}
+h4{
+	color: green;
+	position: relative;
+	text-align: center;
+	line-height: 0px;
+	font-size: 10px;
+	font-family: "宋体";
+	font-weight: normal;
+}
+
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>信息窗表格设计</title>
+</head>
+<body>
+    <table id="infw" border="1">
+    	<tr>
+    		<td>实体编号</td>
+    		<td>4</td>
+    	</tr>
+    	<tr>
+    		<td>树种名</td>
+    		<td>银杏</td>
+    	</tr>
+    	<tr>
+    		<td>GPS坐标x</td>
+    		<td>113.0000000</td>
+    	</tr>
+    	<tr>
+    		<td>GPS坐标y</td>
+    		<td>40.0000000</td>
+    	</tr>
+    	<tr>
+    		<td>分布位置</td>
+    		<td>小南门内道路行道树</td>
+    	</tr>
+    	<tr>
+    		<td>实体图片</td>
+    		<td>
+    			<img src="{% static 'images/tree.png' %}" style="width: 50px;height: 50px">    			
+    		</td>
+    	</tr>
+    </table>
+</body>
+</html>
+
+<!-- <img src="static/images/tree.png" style="width: 50px;height: 50px"> -->
+<img src="{% static 'images/tree.png' %}" style="width: 50px;height: 50px"> 

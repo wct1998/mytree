@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+	<div class="center" style="width:1000px;height:614px; background-image:url({% static 'images/1.jpg' %})">
+	    <div class="login" >
+	        <div class="header">
+	        	<div class="inheader">
+	        		<div class="inheadimg">
+<!--	        			<img src="static/images/clock.png" >-->
+                        <img src="{% static 'images/clock.png' %}" >
+	        		</div>
+	        		<div class="headtext1">	        			
+	        			<div class="cms">	        				
+	        				<h1>单木数据管理系统</h1>
+	        				<tr></tr>
+	        				<h2>TREE DATA MANAGEMENT SYSTEM</h2>
+	        			</div>
+	        		</div>
+	        		<div class="headtext2">
+	        			<h3>LOGIN 用户登录▶</h3>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="main">
+	        	<div class="lmain">	        		
+	        		<div class="imag" align="center">
+<!--	        			<img src="static/images/jiheti.png">	 -->
+                        <img src="{% static 'images/jiheti.png' %}">
+	        		</div>	        		
+	        	</div>
+	        	<div class="rmain">
+	        		
+	        		    <form action="{% url 'maptree:lists' %}">
+	        			    <br>
+	        			    <br>
+	        			    &nbsp;&nbsp; 用户
+	        			    <input type="text" name="user" >
+	        			    <br>
+	        			    <br>
+	        			    &nbsp;&nbsp; 密码
+	        			    <input type="password" name="pw" >
+	        			    <br>
+	        			    <br>
+	        			    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        			    <input type="submit" value="登陆">
+	        			    <input type="submit" value="注册">
+                        </form> 
+	        		
+	        	</div>
+	        </div>
+	        <div class="footer">
+	        	<h4>
+	        		☐ 版本 2020V1.0
+	        	</h4>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>
